@@ -8,7 +8,9 @@ import java.util.Scanner;
 
 public class Main {
 
+
     public static void main(String[] args) {
+
         try (Scanner sc = new Scanner(Files.newBufferedReader(Paths.get("hex.csv"), Charset.forName("utf-8")))
                 .useDelimiter(",")) {
 
@@ -19,7 +21,7 @@ public class Main {
             }
 
 
-            directMapping(mainMemory);
+            runFirstConfiguration(mainMemory);
 
 
         } catch (IOException e) {
@@ -27,10 +29,34 @@ public class Main {
         }
     }
 
-    public static void directMapping(List<String> mainMemory) {
+    public static void runFirstConfiguration(List<String> mainMemory) {
         var cacheConfiguration = CacheConfigurationStrategy.DIRECT_MAPPING_ONE.getCacheConfiguration();
 
-        
+        var cache = new ArrayList<>(cacheConfiguration.getCacheLines());
+
+        mainMemory.forEach(memoryAddress -> {
+            var tag = memoryAddress.substring(0, cacheConfiguration.getTag());
+            var line = memoryAddress.substring(
+                    cacheConfiguration.getTag(),
+                    cacheConfiguration.getTag() + cacheConfiguration.getLine()
+            );
+
+            var word = memoryAddress.substring(
+                    cacheConfiguration.getTag() + cacheConfiguration.getLine(),
+                    cacheConfiguration.getTag() + cacheConfiguration.getLine() + cacheConfiguration.getWord()
+            );
+
+            var wordByte = memoryAddress.substring(
+                    memoryAddress.length() - 1
+            );
+
+            System.out.println(memoryAddress);
+            System.out.println(tag);
+            System.out.println(line);
+            System.out.println(word);
+            System.out.println(wordByte);
+        });
+
     }
 
     public static String hexToBin(String hex) {
