@@ -20,46 +20,30 @@ public class Main {
                 mainMemory.add(hexToBin(sc.next().trim().toUpperCase()));
             }
 
+            var directCache = new DirectCache();
+            directCache.addTotalUse();
+            directCache.addTotalUse();
+            directCache.addTotalUse();
 
-            runFirstConfiguration(mainMemory);
 
+            var directCache2 = new DirectCache();
+            directCache2.addTotalUse();
+            directCache2.addTotalUse();
+
+
+            var directCache3 = new DirectCache();
+            directCache3.addTotalUse();
+
+
+            DirectMappingCacheRunner.runConfiguration(mainMemory, CacheConfigurationStrategy.DIRECT_MAPPING_ONE);
+            DirectMappingCacheRunner.runConfiguration(mainMemory, CacheConfigurationStrategy.DIRECT_MAPPING_TWO);
 
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public static void runFirstConfiguration(List<String> mainMemory) {
-        var cacheConfiguration = CacheConfigurationStrategy.DIRECT_MAPPING_ONE.getCacheConfiguration();
-
-        var cache = new ArrayList<>(cacheConfiguration.getCacheLines());
-
-        mainMemory.forEach(memoryAddress -> {
-            var tag = memoryAddress.substring(0, cacheConfiguration.getTag());
-            var line = memoryAddress.substring(
-                    cacheConfiguration.getTag(),
-                    cacheConfiguration.getTag() + cacheConfiguration.getLine()
-            );
-
-            var word = memoryAddress.substring(
-                    cacheConfiguration.getTag() + cacheConfiguration.getLine(),
-                    cacheConfiguration.getTag() + cacheConfiguration.getLine() + cacheConfiguration.getWord()
-            );
-
-            var wordByte = memoryAddress.substring(
-                    memoryAddress.length() - 1
-            );
-
-            System.out.println(memoryAddress);
-            System.out.println(tag);
-            System.out.println(line);
-            System.out.println(word);
-            System.out.println(wordByte);
-        });
-
-    }
-
-    public static String hexToBin(String hex) {
+    private static String hexToBin(String hex) {
         String binFragment = "";
         String bin = "";
         int iHex;
