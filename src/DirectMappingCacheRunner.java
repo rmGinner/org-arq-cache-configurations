@@ -13,6 +13,7 @@ public class DirectMappingCacheRunner {
         Integer totalMisses = 0;
 
         for (var memoryAddress : mainMemory) {
+
             var tag = memoryAddress.substring(0, cacheConfiguration.getTag());
             var line = memoryAddress.substring(
                     cacheConfiguration.getTag(),
@@ -66,7 +67,10 @@ public class DirectMappingCacheRunner {
 //            System.out.println(wordByte);
         }
 
+        var missRatio = (totalMisses * 100) / (totalHits + totalMisses);
         System.out.printf("Total of Hits for %s:  %d \n", cacheConfigurationStrategy.name(), totalHits);
         System.out.printf("Total of Misses for %s:  %d \n", cacheConfigurationStrategy.name(), totalMisses);
+        System.out.printf("Total of Hit ratio for %s: %d%%  \n", cacheConfigurationStrategy.name(), 100 - missRatio);
+        System.out.printf("Total of Miss ratio for %s: %d%%  \n\n\n", cacheConfigurationStrategy.name(), missRatio);
     }
 }
