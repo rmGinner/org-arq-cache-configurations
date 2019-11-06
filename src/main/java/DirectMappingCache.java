@@ -6,11 +6,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class Main {
+public class DirectMappingCache {
 
-
-    public static void main(String[] args) {
-
+    public static void readAndRun(){
         try (Scanner sc = new Scanner(Files.newBufferedReader(Paths.get("hex.csv"), Charset.forName("utf-8")))
                 .useDelimiter(",")) {
 
